@@ -1,0 +1,6 @@
+export const  USER_DETAILS = "USER_DETAILS"
+export const USER_LOAD = "USER_LOAD"
+export const SERVICE_DETAILS = "SERVICE_DETAILS"
+export const SERVICE_LOAD = "SERVICE_LOAD"
+export const BOOKING_LOAD = "BOOKING_LOAD"
+export const BOOKING_DETAILS = "BOOKING_DETAILS"
