@@ -1,7 +1,7 @@
 import { BOOKING_LOAD, BOOKING_DETAILS } from "../types";
 
 const initialState = {
-    booking:'',
+    booking: false,
     bookLoading:false
 }
 

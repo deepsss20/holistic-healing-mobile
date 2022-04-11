@@ -1,6 +1,6 @@
-import { useRoute } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import React, { useState } from "react"
-import { View, Text, Image, StyleSheet, TouchableWithoutFeedback, Linking, TextInput } from "react-native"
+import { View, Text, Image, StyleSheet, TouchableWithoutFeedback, Linking, TextInput, Alert } from "react-native"
 import pic from "../../assets/01.jpeg"
 import { get } from "lodash"
 import dayjs from "dayjs"
@@ -22,6 +22,7 @@ const initialState = {
 
 const EventScreen = () => {
     const [{ showTimeSlots, showDatePicker, bookingDate, bookingUnformatted, slot}, setState] = useState(initialState)
+    const navigation = useNavigation()
     const route = useRoute()
     const dispatch = useDispatch()
 
@@ -31,6 +32,13 @@ const EventScreen = () => {
         return rState.userReducer
     })
     
+    const {booking, bookLoading} = useSelector((rState)=>{
+        return rState.eventReducer
+    })
+
+
+
+    console.log(booking, bookLoading)
 
     const options = item.appointment.timeSlots.map((ele)=>{
        return `${timeConverter(ele.begin)} - ${timeConverter(ele.end)}`
@@ -81,6 +89,7 @@ const EventScreen = () => {
     }
     const enableButton = bookingDate && slot
 
+
     const onBookPress = ()=>{
         const serviceId = item._id
         const userId = user._id
@@ -105,7 +114,9 @@ const EventScreen = () => {
     const onLocationClick = async () => {
         await Linking.openURL('https://www.google.com/maps/place/NITHYA+SANJEEVINI+YOGA+PRATHISHTANA/@12.9106634,77.5087062,17z/data=!3m1!4b1!4m5!3m4!1s0x3bae3f0699873fa1:0x1a09876c42b1a5bf!8m2!3d12.9106585!4d77.5108933')
     }
-    const timeSlotLength = get(item, 'appointment.timeSlots', []).length - 1
+    const timeSlotLength = get(item, 'appointment.timeSlots', []).length - 1;
+
+
     return (
         <View>
             <View style={styles.imageView}>
@@ -173,8 +184,18 @@ const EventScreen = () => {
                 <Picker value={slot} onSelect={(itemValue,itemIndex)=>onChangeSlot(itemValue)} options={options}/>
             </View>
             <View>
-                <ActionButton disabled={!enableButton}  title="Book Your Slot" onPress={()=>onBookPress()}/>
+                <ActionButton loading={bookLoading} disabled={!enableButton}  title="Book Your Slot" onPress={()=>onBookPress()}/>
             </View>
+            {booking && Alert.alert(
+            "Booking Details",
+            "Booking Completed Successfully!",
+            [
+                {
+                    text: "Okay",
+                    onPress: () => navigation.goBack()
+                  },
+            ]
+        )}
         </View>
         
     )
