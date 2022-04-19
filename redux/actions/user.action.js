@@ -20,7 +20,7 @@ export const registerUser = ({name, phoneNumber,email,password,navigation})=>(di
     axios.post(apiUrl, payload).then(async res=>{
         console.log(res.data)
         await AsyncStorage.setItem("access_token", res.data.token) 
-        navigation.navigate("home")
+        navigation.navigate("app")
         dispatch({
             type: USER_DETAILS,
             payload:res.data
@@ -53,7 +53,7 @@ export const loginUser = ({phoneNumber, password,navigation})=>(dispatch)=>{
     axios.post(apiUrl, payload).then(async res=>{
         console.log(res.data)
         await AsyncStorage.setItem("access_token",res.data.token)
-        navigation.navigate("home")
+        navigation.navigate("app")
         dispatch({
             type: USER_DETAILS,
             payload:res.data

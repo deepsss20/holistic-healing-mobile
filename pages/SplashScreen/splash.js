@@ -13,7 +13,7 @@ const SplashScreen = ()=>{
             const token = await AsyncStorage.getItem("access_token")
             if(token){
                 dispatch(getUser())
-                navigation.navigate("home")
+                navigation.navigate("app")
             }
             else{
                 navigation.navigate("login")
