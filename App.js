@@ -109,6 +109,9 @@ second value will be function to change the state
   5. Re-Rendering
       if props or state changes then only your component re-render
 
+  Redux flow
+  React --> Actions--> reducers --> React
+
 
 
 
